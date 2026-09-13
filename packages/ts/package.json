@@ -1,0 +1,22 @@
+{
+  "name": "@latticeag/trellis",
+  "version": "1.0.0",
+  "description": "Trellis local watchdog — TypeScript CLI and SDK client",
+  "license": "MIT",
+  "type": "module",
+  "bin": {
+    "trellis": "bin/trellis"
+  },
+  "exports": {
+    ".": "./dist/src/sdk.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test 'dist/test/*.test.js'"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "@types/node": "^24.0.0"
+  }
+}

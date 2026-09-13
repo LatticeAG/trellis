@@ -1,0 +1,29 @@
+# Spec/prompt/review artifacts must never be committed
+SPEC*.md
+*SPEC*.md
+*EXTREME*.md
+PROMPT*.md
+*PROMPT*
+REVIEW*.md
+*REVIEW*
+FIX_PROMPT*
+SELFREVIEW*
+DRAFT*
+REPORT.md
+*REPORT*
+INTERFACES.md
+STATUS*
+
+# Build artifacts
+target/
+node_modules/
+dist/
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+
+# Local scratch
+*.tmp
+/tmp/

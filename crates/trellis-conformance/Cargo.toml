@@ -1,0 +1,10 @@
+[package]
+name = "trellis-conformance"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Trellis conformance vector runner (offline-v1 and linux-single-process-v1 profiles)"
+
+[dependencies]
+trellis-core = { path = "../trellis-core" }
+tempfile.workspace = true

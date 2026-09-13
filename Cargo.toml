@@ -1,0 +1,33 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/trellis-core",
+    "crates/trellisd",
+    "crates/trellis-guard",
+    "crates/trellis-conformance",
+]
+
+[workspace.package]
+version = "1.0.0"
+edition = "2021"
+license = "MIT"
+repository = "https://github.com/LatticeAG/trellis"
+
+[workspace.dependencies]
+sha2 = "0.10.9"
+ed25519-dalek = "2.1.1"
+base64 = "0.22.1"
+crc32fast = "1.4.2"
+getrandom = "0.2.15"
+libc = "0.2.189"
+nix = { version = "0.31.3", features = ["socket", "process", "sched", "fs", "signal", "term", "uio"] }
+rusqlite = { version = "0.32.1", features = ["bundled"] }
+tempfile = "3.27.0"
+serde_json = "1.0.140"
+hex = "0.4.3"
+thiserror = "2.0.18"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"

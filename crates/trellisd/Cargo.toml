@@ -1,0 +1,12 @@
+[package]
+name = "trellisd"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Trellis watchdog daemon"
+
+[dependencies]
+trellis-core = { path = "../trellis-core" }
+libc.workspace = true
+nix.workspace = true
+getrandom.workspace = true
