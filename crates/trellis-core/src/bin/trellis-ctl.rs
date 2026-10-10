@@ -176,8 +176,10 @@ fn keygen(a: &[String]) -> i32 {
     if f.write_all(&seed).is_err() {
         return 74;
     }
+    // The .pin file is a bare Pin object {key_id, public_key}: it must parse
+    // under schema::pin (closed object, no `v`) so it can be passed straight
+    // to --log-pin/--policy-pin or embedded in host.json policy_pins.
     let pin_v = Value::obj(vec![
-        ("v", Value::int(1)),
         ("key_id", Value::str(key_id)),
         ("public_key", Value::str(kp.public_b64())),
     ]);
@@ -523,7 +525,7 @@ fn fixture_dump(a: &[String]) -> i32 {
                 .write(true)
                 .create_new(true)
                 .mode(0o600)
-                .open(&p)
+                .open(p)
             {
                 Ok(f) => f,
                 Err(_) => return 74,

@@ -332,6 +332,7 @@ impl Engine {
         kernel_boot_id: String,
     ) -> Self {
         let boot_id = nanoid("trb"); // replaced by harness when deterministic
+        let log_key_id = cfg.log_key_id.clone();
         Engine {
             cfg,
             state: HostState::Starting,
@@ -342,7 +343,7 @@ impl Engine {
             runs: BTreeMap::new(),
             ids,
             log_key,
-            log_key_id: String::new(),
+            log_key_id,
             os,
             guard,
             now: 0,

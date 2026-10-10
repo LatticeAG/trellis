@@ -69,7 +69,12 @@ sudo install -m755 target/release/trellisd /usr/local/bin/
 sudo install -m755 target/release/trellis-guard /usr/local/bin/
 sudo install -m755 target/release/trellis-ctl /usr/local/bin/
 pnpm --dir packages/ts install && pnpm --dir packages/ts build
-sudo install -m755 packages/ts/bin/trellis /usr/local/bin/trellis
+# the `trellis` launcher imports ../dist/src/cli.js relative to its real
+# path, so install the built package directory and symlink the launcher —
+# installing bin/trellis alone cannot resolve the SDK modules
+sudo mkdir -p /usr/local/lib/trellis-ts
+sudo cp -a packages/ts/bin packages/ts/dist /usr/local/lib/trellis-ts/
+sudo ln -sf /usr/local/lib/trellis-ts/bin/trellis /usr/local/bin/trellis
 ```
 
 ### First-run workflow
