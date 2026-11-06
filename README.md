@@ -184,6 +184,12 @@ submitted without a separately certified adapter.
 
 ## Development
 
+`cargo test --workspace` runs Rust tests where present; some targets have no
+unit tests. The conformance binary is the primary harness for the numbered
+protocol and enforcement vectors. Run the profiles in [Conformance](#conformance)
+in addition to the checks below, and interpret unsupported vectors as described
+there.
+
 ```sh
 cargo fmt --all --check
 cargo clippy --workspace --all-targets -- -D warnings
