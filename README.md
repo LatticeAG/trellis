@@ -74,10 +74,16 @@ sudo install -m755 packages/ts/bin/trellis /usr/local/bin/trellis
 
 ### First-run workflow
 
+Start with [`examples/host.json`](examples/host.json), a schema-valid example
+for diagnostics. Replace its public test policy pin, host and log key IDs,
+paths, and task UID range with values appropriate for your host before use.
+Generate your own keys; the example pin is public and must not be trusted for
+production policies.
+
 ```sh
 # 1. Host config + log key (seed is written 0600, never printed)
 sudo trellis keygen --key-id trk_<21chars> --directory /etc/trellis/keys
-sudoedit /etc/trellis/host.json            # see examples below
+sudoedit /etc/trellis/host.json            # adapt examples/host.json
 
 # 2. Preflight diagnostics — exits 65 unless the host supports the profile
 trellis doctor --config /etc/trellis/host.json --json
