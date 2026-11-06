@@ -189,7 +189,8 @@ cargo fmt --all --check
 cargo clippy --workspace --all-targets -- -D warnings
 cargo test --workspace
 pnpm --dir packages/ts typecheck && pnpm --dir packages/ts test
-cd packages/python && python3 -m pytest tests -q
+python3 -m pip install -e "packages/python[test]"
+python3 -m pytest packages/python/tests -q
 ```
 
 ## License
