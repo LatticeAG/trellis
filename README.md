@@ -149,6 +149,14 @@ host that fails preflight they report `UNSUPPORTED_HOST(checks)` instead
 of borrowing confidence from the model — per the spec, unsupported
 mandatory containment vectors prohibit the enforcement-profile release.
 
+Unprivileged cloud VMs and nested environments commonly lack cgroup control,
+BPF, or other required capabilities. In that case, inspect the JSON `preflight`
+checks and `unsupported` vector entries; unsupported means the host could not
+exercise those vectors, not that enforcement passed. Run `offline-v1` for
+protocol coverage, and rerun the Linux profile on a properly configured host
+to validate enforcement. The offline profile also reports host-dependent vectors
+TV-T--66 and TV-T--67 as unsupported.
+
 ## Security model — honest limits
 
 - Evidence is **local software observation**. Hardware attestation and
