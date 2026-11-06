@@ -218,8 +218,9 @@ fn checksum(data: &[u8]) -> u16 {
         d.push(0);
     }
     let mut total: u32 = 0;
-    for w in d.chunks_exact(2) {
-        total += u16::from_be_bytes([w[0], w[1]]) as u32;
+    let (words, _tail) = d.as_chunks::<2>();
+    for w in words {
+        total += u16::from_be_bytes(*w) as u32;
     }
     while total >> 16 != 0 {
         total = (total & 0xFFFF) + (total >> 16);

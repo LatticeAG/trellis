@@ -523,7 +523,7 @@ fn fixture_dump(a: &[String]) -> i32 {
                 .write(true)
                 .create_new(true)
                 .mode(0o600)
-                .open(&p)
+                .open(p)
             {
                 Ok(f) => f,
                 Err(_) => return 74,
