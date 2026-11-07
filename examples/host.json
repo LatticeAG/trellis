@@ -1,0 +1,19 @@
+{
+  "v": 1,
+  "host_id": "trh_000000000000000000001",
+  "control_socket": "/run/trellis/control.sock",
+  "data_root": "/var/lib/trellis",
+  "runtime_image": "/trellis/runtime.img",
+  "workspace_roots": ["/srv/trellis/work-a"],
+  "task_uid_min": 63000,
+  "task_uid_max": 63003,
+  "max_runs": 4,
+  "policy_pins": [{
+    "key_id": "trk_000000000000000000001",
+    "public_key": "11qYAYKxCrfVS_7TyWQHOg7hcvPapiMlrwIaaPcHURo"
+  }],
+  "log_key_id": "trk_000000000000000000001",
+  "guard": {"renew_ms": 250, "lease_ms": 750, "stop_wait_ms": 2000},
+  "audit": {"max_bytes_per_run": "67108864", "reserve_bytes": "1048576", "retention_days": 365},
+  "cap_adapter": "disabled"
+}

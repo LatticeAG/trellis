@@ -2795,6 +2795,28 @@ impl Engine {
             ("profile", Value::str("linux-single-process-v1")),
             ("ready", Value::Bool(ready)),
             (
+                "reason",
+                if !pf.ready() {
+                    Value::str("UNSUPPORTED_HOST")
+                } else if self.cfg.cap_adapter != "disabled" && !adapter_available {
+                    Value::str("CAP_ADAPTER_UNAVAILABLE")
+                } else if self.state == HostState::Locked {
+                    Value::str("HOST_LOCKED")
+                } else {
+                    Value::Null
+                },
+            ),
+            (
+                "failed_checks",
+                Value::Arr(
+                    pf.checks
+                        .iter()
+                        .filter(|c| !c.1)
+                        .map(|c| Value::str(c.0))
+                        .collect(),
+                ),
+            ),
+            (
                 "checks",
                 Value::obj(vec![
                     ("privileges", Value::Bool(get("privileges"))),

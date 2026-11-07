@@ -74,10 +74,16 @@ sudo install -m755 packages/ts/bin/trellis /usr/local/bin/trellis
 
 ### First-run workflow
 
+Start with [`examples/host.json`](examples/host.json), a schema-valid example
+for diagnostics. Replace its public test policy pin, host and log key IDs,
+paths, and task UID range with values appropriate for your host before use.
+Generate your own keys; the example pin is public and must not be trusted for
+production policies.
+
 ```sh
 # 1. Host config + log key (seed is written 0600, never printed)
 sudo trellis keygen --key-id trk_<21chars> --directory /etc/trellis/keys
-sudoedit /etc/trellis/host.json            # see examples below
+sudoedit /etc/trellis/host.json            # adapt examples/host.json
 
 # 2. Preflight diagnostics — exits 65 unless the host supports the profile
 trellis doctor --config /etc/trellis/host.json --json
@@ -149,6 +155,14 @@ host that fails preflight they report `UNSUPPORTED_HOST(checks)` instead
 of borrowing confidence from the model — per the spec, unsupported
 mandatory containment vectors prohibit the enforcement-profile release.
 
+Unprivileged cloud VMs and nested environments commonly lack cgroup control,
+BPF, or other required capabilities. In that case, inspect the JSON `preflight`
+checks and `unsupported` vector entries; unsupported means the host could not
+exercise those vectors, not that enforcement passed. Run `offline-v1` for
+protocol coverage, and rerun the Linux profile on a properly configured host
+to validate enforcement. The offline profile also reports host-dependent vectors
+TV-T--66 and TV-T--67 as unsupported.
+
 ## Security model — honest limits
 
 - Evidence is **local software observation**. Hardware attestation and
@@ -170,12 +184,19 @@ submitted without a separately certified adapter.
 
 ## Development
 
+`cargo test --workspace` runs Rust tests where present; some targets have no
+unit tests. The conformance binary is the primary harness for the numbered
+protocol and enforcement vectors. Run the profiles in [Conformance](#conformance)
+in addition to the checks below, and interpret unsupported vectors as described
+there.
+
 ```sh
 cargo fmt --all --check
 cargo clippy --workspace --all-targets -- -D warnings
 cargo test --workspace
 pnpm --dir packages/ts typecheck && pnpm --dir packages/ts test
-cd packages/python && python3 -m pytest tests -q
+python3 -m pip install -e "packages/python[test]"
+python3 -m pytest packages/python/tests -q
 ```
 
 ## License

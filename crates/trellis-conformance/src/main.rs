@@ -1945,3 +1945,12 @@ fn main() {
 fn vd(id: &'static str, f: fn(&mut ()) -> R) -> VecDef {
     VecDef { id, f }
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn canonicalization_and_duplicate_keys_vectors_pass() {
+        super::tv01(&mut ()).unwrap();
+        super::tv02(&mut ()).unwrap();
+    }
+}

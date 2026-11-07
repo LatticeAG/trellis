@@ -218,11 +218,26 @@ fn checksum(data: &[u8]) -> u16 {
         d.push(0);
     }
     let mut total: u32 = 0;
-    for w in d.chunks_exact(2) {
-        total += u16::from_be_bytes([w[0], w[1]]) as u32;
+    for i in (0..d.len()).step_by(2) {
+        total += u16::from_be_bytes([d[i], d[i + 1]]) as u32;
     }
     while total >> 16 != 0 {
         total = (total & 0xFFFF) + (total >> 16);
     }
     !(total as u16)
+}
+
+#[cfg(test)]
+mod checksum_tests {
+    use super::checksum;
+
+    #[test]
+    fn internet_checksum_handles_odd_lengths_and_carries() {
+        assert_eq!(checksum(&[]), 0xffff);
+        assert_eq!(
+            checksum(&[0x00, 0x01, 0xf2, 0x03, 0xf4, 0xf5, 0xf6, 0xf7]),
+            0x220d
+        );
+        assert_eq!(checksum(&[0x01, 0x02, 0x03]), 0xfbfd);
+    }
 }
