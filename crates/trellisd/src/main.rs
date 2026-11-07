@@ -242,3 +242,15 @@ fn peer_uid(s: &UnixStream) -> Option<u64> {
         None
     }
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn peer_credentials_identify_current_user() {
+        let (socket, _peer) = std::os::unix::net::UnixStream::pair().unwrap();
+        assert_eq!(
+            super::peer_uid(&socket),
+            Some(unsafe { libc::getuid() } as u64)
+        );
+    }
+}

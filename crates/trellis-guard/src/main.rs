@@ -138,3 +138,14 @@ fn run(fd: i32) -> i32 {
 fn reason_code(_r: trellis_core::types::Reason) -> trellis_core::types::Code {
     trellis_core::types::Code::InvalidInput
 }
+
+#[cfg(test)]
+mod tests {
+    #[test]
+    fn guard_rejects_unsupported_reason_as_invalid_input() {
+        assert_eq!(
+            super::reason_code(trellis_core::types::Reason::Operator),
+            trellis_core::types::Code::InvalidInput
+        );
+    }
+}

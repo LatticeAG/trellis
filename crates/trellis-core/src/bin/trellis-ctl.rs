@@ -540,3 +540,19 @@ fn fixture_dump(a: &[String]) -> i32 {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn flags_extract_values_and_repeated_pins() {
+        let args = ["--input", "policy.json", "--pin", "a", "--pin", "b"]
+            .iter()
+            .map(|s| s.to_string())
+            .collect::<Vec<_>>();
+        assert_eq!(take(&args, "--input"), Some("policy.json"));
+        assert_eq!(take_all(&args, "--pin"), vec!["a", "b"]);
+        assert_eq!(take(&args, "--missing"), None);
+    }
+}
